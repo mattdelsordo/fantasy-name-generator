@@ -30,7 +30,7 @@ public class DnDNames extends JFrame implements ActionListener{
 	ArrayList<String> names;
 	
 	public DnDNames(){
-		this.setTitle("DnD Name Generator");
+		this.setTitle("Fantasy Name Generator");
 		//this.setIconImage(imgButton.getImage()); TODO: add this
 		this.setSize(325, 75); 
 		this.setLayout(new FlowLayout());
