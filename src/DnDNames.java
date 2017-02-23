@@ -95,9 +95,9 @@ public class DnDNames extends JFrame implements ActionListener{
 			{
 				String[] split = line.split(" ");
 				//System.out.print(line);
-				for(String s : split) System.out.print(s + " ");
-				System.out.println();
-				if(split.length ==1) list.add(split[0]);
+				//for(String s : split) System.out.print(s + " ");
+				//System.out.println();
+				if(split.length == 1) list.add(split[0]);
 			}
 			
 			//dictionary.print();
@@ -121,9 +121,6 @@ public class DnDNames extends JFrame implements ActionListener{
 
 	
 	public static void main(String[] args){
-		Random randOH = new Random();
-		int number = randOH.nextInt(1000);
-		if(number == 420) new REPENT();
-		else new DnDNames();
+		new DnDNames();
 	}
 }
