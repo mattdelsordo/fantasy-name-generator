@@ -1,7 +1,7 @@
 /*
  * Matt DelSordo
- * generates spooky names for tessa
- * 9/25/16
+ * Compiles fantasy names for your fantasy characters.
+ * 2/23/1
  */
 
 import java.awt.FlowLayout;
@@ -9,17 +9,12 @@ import java.awt.Font;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.*;
-
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 
 public class DnDNames extends JFrame{
