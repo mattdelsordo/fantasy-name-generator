@@ -5,6 +5,7 @@
  */
 
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.*;
 import java.awt.image.*;
 import java.io.BufferedReader;
@@ -21,67 +22,82 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 
-public class DnDNames extends JFrame implements ActionListener{
+public class DnDNames extends JFrame{
 
 	JButton button;
-//	BufferedImage pump;
+	BufferedImage icon;
 	Random rand;
 	
-	ArrayList<String> names;
+	ArrayList<String> fantasyName, firstName, surname;
 	
 	public DnDNames(){
 		this.setTitle("Fantasy Name Generator");
 		//this.setIconImage(imgButton.getImage()); TODO: add this
-		this.setSize(325, 75); 
+		this.setSize(550, 110); 
 		this.setLayout(new FlowLayout());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 //		//add elements
-//		try //get image for button
-//		{
-//			pump = ImageIO.read(getClass().getResourceAsStream("pump.png"));
-//		}
-//		catch(Exception e)
-//		{
-//			System.out.println("Error reading image.");
-//			System.exit(1);
-//		}
-//		this.setIconImage(pump);
+		try //get image for button
+		{
+			icon = ImageIO.read(getClass().getResourceAsStream("sword.png"));
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error reading image.");
+			System.exit(1);
+		}
+		this.setIconImage(icon);
 		
 		
 		//initialize random number generator
 		rand = new Random();
 		
 		//fill arrays
-		names = fillArray("namesGenUnique.txt");
+		fantasyName = fillArray("namesGenUnique.txt");
+		firstName = fillArray("firstnames.txt");
+		surname = fillArray("surnames.txt");
 
 		button = new JButton(getName());
-		button.addActionListener(this);
+		button.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent ae){
+				onClick();
+			}
+		});
+		button.setFont(new Font("Arial", Font.PLAIN, 40));
 		add(button);
 		getRootPane().setDefaultButton(button);
 		
+		onClick();
+		//pack();
 		
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-
-	}
-		
-
-	
-	public void actionPerformed(ActionEvent ae)
-	{
-		if (button == ae.getSource())
-		{
-			button.setText(getName());
-		}
 	}
 	
+	//gets a random word from a set of names
+	public String getRand(ArrayList<String> list){
+		return list.get(rand.nextInt(list.size()));
+	}
+	
+	//generates a random name based on several models
 	public String getName(){
+		int selection = rand.nextInt(5);
+		//list all cases
 		
-		String randName = names.get(rand.nextInt(names.size())) + " " + names.get(rand.nextInt(names.size()));
-		return randName;
+		//fantasy fantasy
+		if(selection == 0) return getRand(fantasyName) + " " + getRand(fantasyName);
+		//fantasy surname
+		else if(selection == 1) return getRand(fantasyName) + " " + getRand(surname);
+		//first fantasy
+		else if(selection == 2) return getRand(firstName) + " " + getRand(fantasyName);
+		//fantasy fantasy surname
+		else if(selection == 3) return getRand(fantasyName) + " " + getRand(fantasyName) + " " + getRand(surname);
+		//just fantasy
+		else return getRand(fantasyName);
 	}
 	
+	//fills an arraylist with content from a text file
 	public ArrayList<String> fillArray(String source){
 		//get text
 		String line = null;
@@ -93,15 +109,11 @@ public class DnDNames extends JFrame implements ActionListener{
 			
 			while((line = buffer.readLine()) != null)
 			{
-				String[] split = line.split(" ");
-				//System.out.print(line);
-				//for(String s : split) System.out.print(s + " ");
-				//System.out.println();
-				if(split.length == 1) list.add(split[0]);
+				//System.out.println(source + " " + line);
+				//String[] split = line.split(" ");
+				//if(split.length == 1) list.add(split[0]);
+				if(!line.equals("") && !line.substring(1).equals("#")) list.add(line);
 			}
-			
-			//dictionary.print();
-			//System.out.println("Dictionary loaded.");
 			buffer.close();	
 		}
 		catch(FileNotFoundException e)
@@ -117,6 +129,13 @@ public class DnDNames extends JFrame implements ActionListener{
 		
 		return list;
 
+	}
+	
+	//what happens on button click
+	public void onClick(){
+		String name = getName();
+		button.setText(name);
+		System.out.println(name);
 	}
 
 	
